@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
-
+import { getMonthName } from '../shared/dishes';
 export default class DishDetail extends Component {
     constructor(props){
         super(props);
@@ -10,11 +10,13 @@ export default class DishDetail extends Component {
         const { image, name, description, comments } = this.props.dish;
         const dishComments = comments.map(c=> {
             if(c != null){
-                const date = c.date.substring(0,10);
+                const day = c.date.substring(8,10);
+                const month = getMonthName(c.date.substring(5,7));
+                const year = c.date.substring(0,4);
                 return (
                     <div key={c.id}>
                         <p>{c.comment}</p>
-                        <p>-- {c.author}, <span>{date}</span></p>
+                        <p>-- {c.author}, <span>{month} {day}, {year}</span></p>
                     </div>
                 )
             }
