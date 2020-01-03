@@ -2,36 +2,29 @@ import React, { Component, Fragment } from 'react'
 import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
 import { getMonthName } from '../shared/dishes';
 export default class DishDetail extends Component {
-    // eslint-disable-next-line
-    constructor(props){
-        super(props);
-
-    }
     renderDish(dish){
-        const { image, name, description } = dish;
-        return(
-            <Card>
-                <CardTitle >{name}</CardTitle>
-                <CardImg width="100%" src={image} alt={name} />
-                <CardBody>
-                    <CardTitle>{name}</CardTitle>
-                    <CardText>{description}</CardText>
-                </CardBody>
-             </Card>
-        )
+        if(dish != null){
+            const { image, name, description } = dish;
+            return(
+                <Card>
+                    <CardImg width="100%" src={image} alt={name} />
+                    <CardBody>
+                        <CardTitle>{name}</CardTitle>
+                        <CardText>{description}</CardText>
+                    </CardBody>
+                </Card>
+            )
+        }
     }
     renderComments(comments) {
         let dishComments;
         if(comments != null){
             dishComments = comments.map(c=> {
-                const day = c.date.substring(8,10);
-                //const month = getMonthName(c.date.substring(5,7));
-                const month = c.date.substring(5,7);
-                const year = c.date.substring(0,4);
+                const options = { year: 'numeric', month: 'short', day: '2-digit'}
                 return (
                     <li key={c.id} className="list-unstyled">
                         <p>{c.comment}</p>
-                        <p>-- {c.author}, <span>{month}-{day}-{year}</span></p>
+                        <p>-- {c.author}, <span>{new Intl.DateTimeFormat('en-US', options).format(new Date(Date.parse(c.date)))}</span></p>
                     </li>
                 )
             });
@@ -44,16 +37,27 @@ export default class DishDetail extends Component {
         }
     }
     render() {
-        return (
-            <Fragment>
-                <div className="col-md-5 m-1">
-                    {this.renderDish(this.props.dish)}
+        const { dish } = this.props;
+        if(dish){
+            return (
+                <div className="container">
+                    <div className="row">
+                    <div className="col-md-5 m-1">
+                        {this.renderDish(dish)}
+                        {console.log(dish)}
+                    </div>
+                    <div className="col-md-5 m-1">
+                        <h4>Comments</h4>
+                        {this.renderComments(dish.comments)}
+                    </div>
+                    </div>
                 </div>
-                <div className="col-md-5 m-1">
-                    <h4>Comments</h4>
-                    {this.renderComments(this.props.dish.comments)}
-                </div>
-            </Fragment>
-        )
+            )
+        }
+        else{
+            return(
+                <div></div>
+            )
+        }
     }
 }
