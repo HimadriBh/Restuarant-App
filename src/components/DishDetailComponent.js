@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
-import { getMonthName } from '../shared/dishes';
-export default class DishDetail extends Component {
-    renderDish(dish){
+
+    
+    function RenderDish({ dish }){
         if(dish != null){
             const { image, name, description } = dish;
             return(
@@ -16,7 +16,7 @@ export default class DishDetail extends Component {
             )
         }
     }
-    renderComments(comments) {
+    function RenderComments({comments}){
         let dishComments;
         if(comments != null){
             dishComments = comments.map(c=> {
@@ -36,28 +36,26 @@ export default class DishDetail extends Component {
             )
         }
     }
-    render() {
-        const { dish } = this.props;
-        if(dish){
-            return (
-                <div className="container">
-                    <div className="row">
-                    <div className="col-md-5 m-1">
-                        {this.renderDish(dish)}
-                        {console.log(dish)}
-                    </div>
-                    <div className="col-md-5 m-1">
-                        <h4>Comments</h4>
-                        {this.renderComments(dish.comments)}
-                    </div>
-                    </div>
-                </div>
-            )
-        }
-        else{
-            return(
-                <div></div>
-            )
-        }
+
+export default function DishDetail(props){
+if(props.dish){
+    return (
+        <div className="container">
+            <div className="row">
+            <div className="col-md-5 m-1">
+                <RenderDish dish={props.dish}/>
+            </div>
+            <div className="col-md-5 m-1">
+                <h4>Comments</h4>
+                <RenderComments comments={props.dish.comments}/>
+            </div>
+            </div>
+        </div>
+    )
+    }
+    else{
+        return(
+            <div></div>
+        )
     }
 }

@@ -11,12 +11,24 @@ class Main extends Component {
       dishes: DISHES,
       selectDish: null
     }
+    console.log("Menu component constructor method invoked")
+
   }
   onDishSelect(dishId){
     this.setState({ selectDish: dishId })   
     }
+  
+  componentDidMount(){
+      console.log("Main component componentDidMount method invoked")
+  }
+
+  componentDidUpdate(){
+      console.log("Main component componentDidUpdate method invoked")
+  }
 
   render(){
+    console.log("Menu component render method invoked")
+
     return (
       <div>
         <Navbar dark color="primary" >
