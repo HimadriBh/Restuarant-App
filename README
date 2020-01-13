@@ -1,0 +1,10 @@
+# Restuarant-App
+Simple Restaurant App using Reactjs
+- Simple restaurant application which shows various dishes available along with their details,
+   demonstrate the use of simple React components.
+- It uses various third party packages like react-router-dom, react-redux, reactstrap.
+
+## Instructions 
+ - Clone the respository into your local machine.
+ - Run `npm install` to install all the dependencies.
+ - Run `npm start` to see the application in action.
